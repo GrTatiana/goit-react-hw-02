@@ -1,0 +1,7 @@
+.list {
+  text-align: left;
+}
+.item {
+  color: black;
+  list-style-type: none;
+}
