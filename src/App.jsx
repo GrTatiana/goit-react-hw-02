@@ -11,7 +11,6 @@ function App() {
     neutral: 0,
     bad: 0,
   });
-  // console.log({ count });
 
   useState(() => {
     const stateSave = localStorage.getItem("feedback", { count });
