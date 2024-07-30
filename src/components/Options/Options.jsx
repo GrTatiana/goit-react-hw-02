@@ -1,12 +1,34 @@
 import css from "./Options.module.css";
-function Options() {
+function Options({ good, neutral, bad, updateFeedback, onResetBtn }) {
   return (
-    <>
-      <button type="button">{Good}:</button>
-      <button type="button">{Neutral}:</button>
-      <button type="button">{Bad}:</button>
-      <button type="button">{Reset}:</button>
-    </>
+    <div className={css.boxOptions}>
+      <button
+        type="button"
+        className={css.btnClick}
+        onClick={() => updateFeedback("good")}
+      >
+        Good
+      </button>
+      <button
+        type="button"
+        className={css.btnClick}
+        onClick={() => updateFeedback("neutral")}
+      >
+        Neutral
+      </button>
+      <button
+        type="button"
+        className={css.btnClick}
+        onClick={() => updateFeedback("bad")}
+      >
+        Bad
+      </button>
+      {(good > 0 || neutral > 0 || bad > 0) && (
+        <button type="button" className={css.btnClick} onClick={onResetBtn}>
+          Reset
+        </button>
+      )}
+    </div>
   );
 }
 

@@ -1,10 +1,9 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useState, useEffect } from "react";
 import "./App.css";
 import Description from "./components/Description/Description";
 import Options from "./components/Options/Options";
 import Feedback from "./components/Feedback/Feedback";
+import Notification from "./components/Notification/Notification";
 
 function App() {
   const [count, setCount] = useState({
@@ -12,26 +11,52 @@ function App() {
     neutral: 0,
     bad: 0,
   });
-  // const updateFeedback = (feedbackType) => {
-  //   // Тут використовуй сеттер, щоб оновити стан
-  //   setCount;
-  // };
+  // console.log({ count });
+
+  useState(() => {
+    const stateSave = localStorage.getItem("feedback", { count });
+    if (stateSave) {
+      setCount(JSON.parse(stateSave));
+    }
+  });
+
+  useEffect(() => {
+    window.localStorage.setItem("feedback", JSON.stringify(count));
+  });
+
+  const updateFeedback = (feedbackType) => {
+    setCount({ ...count, [feedbackType]: count[feedbackType] + 1 });
+  };
+
+  const onResetBtn = () => {
+    setCount({ good: 0, neutral: 0, bad: 0 });
+    localStorage.removeItem("feedback");
+  };
+
   const totalFeedback = count.good + count.neutral + count.bad;
+
+  const positiveFeedback = Math.round((count.good / totalFeedback) * 100);
 
   return (
     <>
       <Description />
-      {/* <Options /> */}
+      <Options
+        updateFeedback={updateFeedback}
+        good={count.good}
+        neutral={count.neutral}
+        bad={count.bad}
+        onResetBtn={onResetBtn}
+      />
+      {(count.good === 0) & (count.neutral === 0) & (count.bad === 0) && (
+        <Notification />
+      )}
       <Feedback
         good={count.good}
         neutral={count.neutral}
         bad={count.bad}
         total={totalFeedback}
-        positive={100}
+        positiveFeedback={positiveFeedback}
       />
-      {/* <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button> */}
     </>
   );
 }
