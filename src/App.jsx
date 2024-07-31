@@ -21,7 +21,7 @@ function App() {
 
   useEffect(() => {
     window.localStorage.setItem("feedback", JSON.stringify(count));
-  });
+  }, [count]);
 
   const updateFeedback = (feedbackType) => {
     setCount({ ...count, [feedbackType]: count[feedbackType] + 1 });
@@ -46,16 +46,16 @@ function App() {
         bad={count.bad}
         onResetBtn={onResetBtn}
       />
-      {(count.good === 0) & (count.neutral === 0) & (count.bad === 0) && (
-        <Notification />
+      {totalFeedback === 0 && <Notification />}
+      {totalFeedback > 0 && (
+        <Feedback
+          good={count.good}
+          neutral={count.neutral}
+          bad={count.bad}
+          total={totalFeedback}
+          positiveFeedback={positiveFeedback}
+        />
       )}
-      <Feedback
-        good={count.good}
-        neutral={count.neutral}
-        bad={count.bad}
-        total={totalFeedback}
-        positiveFeedback={positiveFeedback}
-      />
     </>
   );
 }
