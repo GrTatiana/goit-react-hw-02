@@ -13,7 +13,7 @@ function App() {
   });
 
   useState(() => {
-    const stateSave = localStorage.getItem("feedback", { count });
+    const stateSave = window.localStorage.getItem("feedback", { count });
     if (stateSave) {
       setCount(JSON.parse(stateSave));
     }
