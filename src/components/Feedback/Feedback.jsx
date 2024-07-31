@@ -7,9 +7,7 @@ function Feedback({ good, neutral, bad, total, positiveFeedback }) {
         <li className={css.item}>Neutral: {neutral}</li>
         <li className={css.item}>Bad: {bad}</li>
         <li className={css.item}>Total: {total}</li>
-        {good > 0 && (
-          <li className={css.item}>Positive: {positiveFeedback}%</li>
-        )}
+        <li className={css.item}>Positive: {positiveFeedback}%</li>
       </ul>
     </div>
   );

@@ -46,8 +46,9 @@ function App() {
         bad={count.bad}
         onResetBtn={onResetBtn}
       />
-      {totalFeedback === 0 && <Notification />}
-      {totalFeedback > 0 && (
+      {totalFeedback === 0 ? (
+        <Notification />
+      ) : (
         <Feedback
           good={count.good}
           neutral={count.neutral}
