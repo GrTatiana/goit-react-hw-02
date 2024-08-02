@@ -6,17 +6,15 @@ import Feedback from "./components/Feedback/Feedback";
 import Notification from "./components/Notification/Notification";
 
 function App() {
-  const [count, setCount] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0,
-  });
-
-  useState(() => {
-    const stateSave = window.localStorage.getItem("feedback", { count });
-    if (stateSave) {
-      setCount(JSON.parse(stateSave));
-    }
+  const [count, setCount] = useState(() => {
+    const stateSave = window.localStorage.getItem("feedback");
+    return stateSave
+      ? JSON.parse(stateSave)
+      : {
+          good: 0,
+          neutral: 0,
+          bad: 0,
+        };
   });
 
   useEffect(() => {
@@ -29,7 +27,6 @@ function App() {
 
   const onResetBtn = () => {
     setCount({ good: 0, neutral: 0, bad: 0 });
-    localStorage.removeItem("feedback");
   };
 
   const totalFeedback = count.good + count.neutral + count.bad;
